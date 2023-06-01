@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp" >
+    android:background="@drawable/mood_selector_bg"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp">
 
     <TextView
         android:id="@+id/tv_dialog_title"
@@ -11,8 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="MOOD"
-        android:textSize="20sp"
+        android:textSize="30dp"
         android:textStyle="bold"
+        android:textColor="@color/eerie_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +57,9 @@
         android:id="@+id/tv_mood_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="22dp"
         android:text=""
+        android:textColor="@color/eerie_black"
         app:layout_constraintTop_toBottomOf="@+id/ll_mood_selector"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +70,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Something to add?"
-        android:textSize="12dp"
+        android:textSize="18dp"
+        android:textColor="@color/eerie_black"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="@id/imv_comment"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,14 +91,30 @@
 
     <EditText
         android:id="@+id/edt_comment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/bg_mood_selector_comment"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/imv_comment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/quartz"
+        app:layout_constraintTop_toBottomOf="@+id/edt_comment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="8dp"
+        app:strokeColor="@color/eerie_black"
+        app:strokeWidth="2dp"
+        android:text="CONTINUE" />
 </androidx.constraintlayout.widget.ConstraintLayout>
