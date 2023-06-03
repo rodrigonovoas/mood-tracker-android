@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -55,8 +56,8 @@ class MoodSelectorDialog: DialogFragment() {
     }
 
     private fun setListeners(view: View) {
-        val tvMood = view.findViewById<TextView>(R.id.tv_comment_title)
-        tvMood.setOnClickListener { viewModel.setCommentVisibility() }
+        val llComment = view.findViewById<LinearLayout>(R.id.ll_comment)
+        llComment.setOnClickListener { viewModel.setCommentVisibility() }
 
         val imvHappy = view.findViewById<ImageView>(R.id.imv_happy_mood)
         imvHappy.setOnClickListener { viewModel.setCurrentMood(HAPPY_MOOD) }
