@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Mood(
-    @PrimaryKey(autoGenerate = true ) val id: Int,
+    @PrimaryKey(autoGenerate = true ) val id: Int?,
     val creationDate: Long,
     val moodType: Int,
     val comment: String?

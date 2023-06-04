@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.example.moodtracker.R
+import com.example.moodtracker.data.entity.Mood
+import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.utils.DateUtils
 
 class MoodSelectorDialog: DialogFragment() {
 
@@ -25,7 +28,7 @@ class MoodSelectorDialog: DialogFragment() {
         val SAD_MOOD_TEXT = "Sad"
     }
 
-    private val viewModel: MoodSelectorViewModel = MoodSelectorViewModel()
+    private lateinit var viewModel: MoodSelectorViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_mood_selector, container, false)
@@ -33,6 +36,8 @@ class MoodSelectorDialog: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = MoodSelectorViewModel(MoodDatabaseRepository(requireContext()))
 
         setListeners(view)
         setObservers(view)
@@ -70,8 +75,23 @@ class MoodSelectorDialog: DialogFragment() {
 
         val btnContinue = view.findViewById<Button>(R.id.btn_continue)
         btnContinue.setOnClickListener {
-            if (!viewModel.hasAnyMoodBeenSelected()) return@setOnClickListener
+            addMoodIfSelected(view)
         }
+    }
+
+    private fun addMoodIfSelected(view: View) {
+        if (!viewModel.hasAnyMoodBeenSelected())
+            return
+
+        val edtComment = view.findViewById<EditText>(R.id.edt_comment)
+
+        viewModel.addMoodToDatabase(
+            Mood(null,
+                DateUtils.getCurrentDateTimeAsTimeStamp(),
+                viewModel.getSelectedMood(),
+                edtComment.text.toString()
+            )
+        )
     }
 
 }
