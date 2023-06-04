@@ -1,7 +1,10 @@
 package com.example.moodtracker.ui.moodSelector
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.example.moodtracker.db.MoodDatabaseRepository
 import com.example.moodtracker.getOrAwaitValue
 import org.junit.Assert.*
 import org.junit.Before
@@ -20,7 +23,8 @@ class MoodSelectorDialogTest {
 
     @Before
     fun setup() {
-        viewModel = MoodSelectorViewModel()
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        viewModel = MoodSelectorViewModel(MoodDatabaseRepository(context))
     }
 
     @Test
@@ -83,7 +87,7 @@ class MoodSelectorDialogTest {
     @Test
     fun shouldContinueWhenMoodIsSelected() {
         val expectedValue = true
-        viewModel.setCurrentMood(0)
+        viewModel.setCurrentMood(MoodSelectorDialog.HAPPY_MOOD)
         assertEquals(expectedValue, viewModel.hasAnyMoodBeenSelected())
     }
 }

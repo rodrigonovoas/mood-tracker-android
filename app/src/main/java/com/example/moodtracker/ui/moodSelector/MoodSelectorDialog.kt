@@ -75,7 +75,8 @@ class MoodSelectorDialog: DialogFragment() {
 
         val btnContinue = view.findViewById<Button>(R.id.btn_continue)
         btnContinue.setOnClickListener {
-            addMoodIfSelected(view)
+            dismiss()
+            // addMoodIfSelected(view)
         }
     }
 

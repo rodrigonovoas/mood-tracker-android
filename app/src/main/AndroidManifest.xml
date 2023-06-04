@@ -12,7 +12,7 @@
         android:theme="@style/Theme.MoodTracker"
         tools:targetApi="31">
         <activity
-            android:name=".ui.mainScreen.MainActivity"
+            android:name=".ui.moodTracker.MoodTrackerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
