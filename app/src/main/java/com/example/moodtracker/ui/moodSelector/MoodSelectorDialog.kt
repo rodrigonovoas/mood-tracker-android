@@ -16,13 +16,13 @@ import com.example.moodtracker.utils.DateUtils
 class MoodSelectorDialog: DialogFragment() {
 
     companion object{
-        val HAPPY_MOOD = 0
-        val NEUTRAL_MOOD = 1
-        val SAD_MOOD = 2
+        const val HAPPY_MOOD = 0
+        const val NEUTRAL_MOOD = 1
+        const val SAD_MOOD = 2
 
-        val HAPPY_MOOD_TEXT = "Happy"
-        val NEUTRAL_MOOD_TEXT = "Neutral"
-        val SAD_MOOD_TEXT = "Sad"
+        const val HAPPY_MOOD_TEXT = "Happy"
+        const val NEUTRAL_MOOD_TEXT = "Neutral"
+        const val SAD_MOOD_TEXT = "Sad"
     }
 
     private lateinit var viewModel: MoodSelectorViewModel

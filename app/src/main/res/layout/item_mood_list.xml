@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="250dp"
+    android:gravity="bottom|center_horizontal"
+    android:padding="8dp"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_mood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/view_mood_bar"
+        android:layout_width="40dp"
+        android:layout_height="200dp"
+        android:background="@drawable/bg_mood_happy_status_bar" />
+
+    <ImageView
+        android:id="@+id/imv_mood_status"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_happy_mood"/>
 </LinearLayout>
