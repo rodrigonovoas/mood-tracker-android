@@ -21,7 +21,13 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
         val context = holder.ivMoodStatus.context
         holder.moodBar.setBackground(context.getDrawable(getMoodStatusBackground(item.moodType)))
         holder.ivMoodStatus.setImageDrawable(context.getDrawable(getMoodStatusImage(item.moodType)))
+        setMoodBarSize(holder, item)
+    }
 
+    private fun setMoodBarSize(
+        holder: ViewHolder,
+        item: Mood
+    ) {
         val layoutParams = holder.moodBar.layoutParams
         layoutParams.height = getMoodStatusBarSize(item.moodType)
     }

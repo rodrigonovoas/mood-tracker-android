@@ -57,15 +57,14 @@ class MoodSelectorDialog: DialogFragment() {
         })
 
         viewModel.closeDialog.observe(this, Observer { close ->
-            if (close) {
-                if (activity is MoodTrackerActivity)
-                        (activity as MoodTrackerActivity).getMoods()
-                this.dismiss()
-            }
+            if (close) loadMoodsAndDissmiss()
         })
     }
 
     private fun setListeners(view: View) {
+        val imvClose = view.findViewById<ImageView>(R.id.imv_close)
+        imvClose.setOnClickListener { loadMoodsAndDissmiss()}
+
         val llComment = view.findViewById<LinearLayout>(R.id.ll_comment)
         llComment.setOnClickListener { viewModel.setCommentVisibility() }
 
@@ -79,9 +78,7 @@ class MoodSelectorDialog: DialogFragment() {
         imvSad.setOnClickListener { viewModel.setCurrentMood(SAD_MOOD) }
 
         val btnContinue = view.findViewById<Button>(R.id.btn_continue)
-        btnContinue.setOnClickListener {
-            addMoodIfSelected(view)
-        }
+        btnContinue.setOnClickListener { addMoodIfSelected(view) }
     }
 
     private fun addMoodIfSelected(view: View) {
@@ -94,9 +91,14 @@ class MoodSelectorDialog: DialogFragment() {
             Mood(null,
                 DateUtils.getCurrentDateTimeAsTimeStamp(),
                 viewModel.getSelectedMood(),
-                edtComment.text.toString()
-            )
+                edtComment.text.toString())
         )
+    }
+
+    private fun loadMoodsAndDissmiss() {
+        if (activity is MoodTrackerActivity)
+            (activity as MoodTrackerActivity).getMoods()
+        this.dismiss()
     }
 
 }

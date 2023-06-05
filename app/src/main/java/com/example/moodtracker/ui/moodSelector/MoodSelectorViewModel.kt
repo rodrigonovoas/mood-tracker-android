@@ -24,9 +24,9 @@ class MoodSelectorViewModel(val repository: MoodDatabaseRepository): ViewModel()
     fun setCurrentMood(selectedMood: Int) {
         this.selectedMood = selectedMood
         when (selectedMood) {
-            0 -> _selectedMoodText.value = MoodSelectorDialog.HAPPY_MOOD_TEXT
-            1 -> _selectedMoodText.value = MoodSelectorDialog.NEUTRAL_MOOD_TEXT
-            2 -> _selectedMoodText.value = MoodSelectorDialog.SAD_MOOD_TEXT
+            MoodSelectorDialog.HAPPY_MOOD -> _selectedMoodText.value = MoodSelectorDialog.HAPPY_MOOD_TEXT
+            MoodSelectorDialog.NEUTRAL_MOOD -> _selectedMoodText.value = MoodSelectorDialog.NEUTRAL_MOOD_TEXT
+            MoodSelectorDialog.SAD_MOOD -> _selectedMoodText.value = MoodSelectorDialog.SAD_MOOD_TEXT
             else -> {
                 _selectedMoodText.value = MoodSelectorDialog.SAD_MOOD_TEXT
             }
