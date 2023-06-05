@@ -16,6 +16,9 @@ class MoodSelectorViewModel(val repository: MoodDatabaseRepository): ViewModel()
     val edtCommentVisibility: LiveData<Boolean> get() = _edtCommentVisibility
     private var _edtCommentVisibility = MutableLiveData<Boolean>()
 
+    val closeDialog: LiveData<Boolean> get() = _closeDialog
+    private var _closeDialog = MutableLiveData<Boolean>()
+
     private var selectedMood = -1
 
     fun setCurrentMood(selectedMood: Int) {
@@ -40,7 +43,8 @@ class MoodSelectorViewModel(val repository: MoodDatabaseRepository): ViewModel()
 
     fun addMoodToDatabase(mood: Mood) {
         viewModelScope.launch {
-            repository.moodDao.insert(mood)
+            val added = repository.moodDao.insert(mood)
+            if (added > 0) _closeDialog.value = true
         }
     }
 

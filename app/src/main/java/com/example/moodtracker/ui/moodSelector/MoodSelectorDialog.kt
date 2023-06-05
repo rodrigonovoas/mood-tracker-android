@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.ui.moodTracker.MoodTrackerActivity
 import com.example.moodtracker.utils.DateUtils
 
 class MoodSelectorDialog: DialogFragment() {
@@ -58,6 +55,14 @@ class MoodSelectorDialog: DialogFragment() {
                 edtComment.visibility = View.GONE
             }
         })
+
+        viewModel.closeDialog.observe(this, Observer { close ->
+            if (close) {
+                if (activity is MoodTrackerActivity)
+                        (activity as MoodTrackerActivity).getMoods()
+                this.dismiss()
+            }
+        })
     }
 
     private fun setListeners(view: View) {
@@ -75,8 +80,7 @@ class MoodSelectorDialog: DialogFragment() {
 
         val btnContinue = view.findViewById<Button>(R.id.btn_continue)
         btnContinue.setOnClickListener {
-            dismiss()
-            // addMoodIfSelected(view)
+            addMoodIfSelected(view)
         }
     }
 
