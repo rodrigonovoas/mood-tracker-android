@@ -9,9 +9,15 @@ object DateUtils {
         return currentDateTime.time
     }
 
-    fun convertLongToDate(time: Long): String {
+    fun convertLongToShortDate(time: Long): String {
         val date = Date(time)
         val format = SimpleDateFormat("dd-MM")
+        return format.format(date)
+    }
+
+    fun convertLongToLongDate(time: Long): String {
+        val date = Date(time)
+        val format = SimpleDateFormat("dd-MM-yyyy")
         return format.format(date)
     }
 
