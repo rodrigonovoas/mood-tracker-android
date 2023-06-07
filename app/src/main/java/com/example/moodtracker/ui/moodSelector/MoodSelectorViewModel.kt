@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moodtracker.data.entity.Mood
-import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.db.MoodRepository
 import kotlinx.coroutines.launch
 
-class MoodSelectorViewModel(val repository: MoodDatabaseRepository): ViewModel() {
+class MoodSelectorViewModel(val repository: MoodRepository): ViewModel() {
 
     val selectedMoodText: LiveData<String> get() = _selectedMoodText
     private var _selectedMoodText = MutableLiveData<String>()
@@ -43,7 +43,7 @@ class MoodSelectorViewModel(val repository: MoodDatabaseRepository): ViewModel()
 
     fun addMoodToDatabase(mood: Mood) {
         viewModelScope.launch {
-            val added = repository.moodDao.insert(mood)
+            val added = repository.insertMood(mood) ?: 0
             if (added > 0) _closeDialog.value = true
         }
     }

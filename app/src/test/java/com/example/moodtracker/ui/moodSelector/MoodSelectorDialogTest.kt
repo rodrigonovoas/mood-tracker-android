@@ -1,11 +1,11 @@
 package com.example.moodtracker.ui.moodSelector
 
-import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.data.entity.Mood
+import com.example.moodtracker.db.FakeMoodDatabaseRepository
 import com.example.moodtracker.getOrAwaitValue
+import com.example.moodtracker.utils.DateUtils
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
@@ -23,8 +23,7 @@ class MoodSelectorDialogTest {
 
     @Before
     fun setup() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        viewModel = MoodSelectorViewModel(MoodDatabaseRepository(context))
+        viewModel = MoodSelectorViewModel(FakeMoodDatabaseRepository())
     }
 
     @Test
@@ -89,5 +88,14 @@ class MoodSelectorDialogTest {
         val expectedValue = true
         viewModel.setCurrentMood(MoodSelectorDialog.HAPPY_MOOD)
         assertEquals(expectedValue, viewModel.hasAnyMoodBeenSelected())
+    }
+
+    @Test
+    fun shouldAddSelectedMoodAfterContinue() {
+        val expectedValue = true
+        viewModel.setCurrentMood(MoodSelectorDialog.HAPPY_MOOD)
+        viewModel.addMoodToDatabase(Mood(null,DateUtils.getCurrentDateTimeAsTimeStamp(), viewModel.getSelectedMood(), ""))
+        val moodAdded = viewModel.closeDialog.getOrAwaitValue()
+        assertEquals(expectedValue, moodAdded)
     }
 }
