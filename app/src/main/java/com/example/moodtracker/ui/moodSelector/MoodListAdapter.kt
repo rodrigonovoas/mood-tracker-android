@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
+import com.example.moodtracker.utils.DateUtils
 
 class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<MoodListAdapter.ViewHolder>()
 {
@@ -21,6 +23,7 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
         val context = holder.ivMoodStatus.context
         holder.moodBar.setBackground(context.getDrawable(getMoodStatusBackground(item.moodType)))
         holder.ivMoodStatus.setImageDrawable(context.getDrawable(getMoodStatusImage(item.moodType)))
+        holder.tvDate.setText(DateUtils.convertLongToDate(item.creationDate))
         setMoodBarSize(holder, item)
     }
 
@@ -39,6 +42,7 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val moodBar: View = itemView.findViewById(R.id.view_mood_bar)
         val ivMoodStatus: ImageView = itemView.findViewById(R.id.imv_mood_status)
+        val tvDate: TextView = itemView.findViewById(R.id.tv_mood_date)
     }
 
     private fun getMoodStatusImage(moodType: Int): Int {
