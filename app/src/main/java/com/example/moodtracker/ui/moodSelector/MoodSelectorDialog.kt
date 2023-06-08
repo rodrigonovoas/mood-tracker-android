@@ -11,11 +11,13 @@ import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.databinding.DialogMoodSelectorBinding
 import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.sharedPreferences.SharedPreferenceHelper
 import com.example.moodtracker.ui.moodTracker.MoodTrackerActivity
 import com.example.moodtracker.utils.DateUtils
 
 class MoodSelectorDialog: DialogFragment() {
     private lateinit var binding: DialogMoodSelectorBinding
+    private lateinit var sharedPrefs: SharedPreferenceHelper
 
     companion object{
         const val HAPPY_MOOD = 0
@@ -37,6 +39,7 @@ class MoodSelectorDialog: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPrefs = SharedPreferenceHelper(requireContext())
         viewModel = MoodSelectorViewModel(MoodDatabaseRepository(requireContext()))
 
         setListeners(view)
@@ -57,7 +60,9 @@ class MoodSelectorDialog: DialogFragment() {
         })
 
         viewModel.closeDialog.observe(this, Observer { close ->
-            if (close) loadMoodsAndDissmiss()
+            if (close)
+                sharedPrefs.setLastMoodDate(DateUtils.getCurrentDateTimeAsTimeStamp())
+                loadMoodsAndDissmiss()
         })
     }
 

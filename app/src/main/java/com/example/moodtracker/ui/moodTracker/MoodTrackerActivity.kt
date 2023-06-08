@@ -8,14 +8,18 @@ import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.databinding.ActivityMoodTrackerBinding
 import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.sharedPreferences.SharedPreferenceHelper
 import com.example.moodtracker.ui.moodSelector.MoodListAdapter
 import com.example.moodtracker.ui.moodSelector.MoodSelectorDialog
 import com.example.moodtracker.utils.DateUtils
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MoodTrackerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMoodTrackerBinding
     private lateinit var viewModel: MoodTrackerViewModel
+    private lateinit var sharedPreferences: SharedPreferenceHelper
     private lateinit var moodSelectorDialog: MoodSelectorDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,10 +27,16 @@ class MoodTrackerActivity : AppCompatActivity() {
         binding = ActivityMoodTrackerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        sharedPreferences = SharedPreferenceHelper(this)
         viewModel = MoodTrackerViewModel(MoodDatabaseRepository(this))
         moodSelectorDialog = MoodSelectorDialog()
 
-        openMoodSelectorDialog()
+        if (!hasTodayMoodBeenAdded()) {
+            openMoodSelectorDialog()
+        } else {
+            getMoods()
+        }
+
         setObservers()
     }
 
@@ -61,6 +71,14 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun openMoodSelectorDialog() {
         moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog")
+    }
+
+    private fun hasTodayMoodBeenAdded(): Boolean {
+        val lastStoredMoodDate = sharedPreferences.getLastMoodDate()
+        val currentDate = SimpleDateFormat("dd", Locale.FRANCE).format(DateUtils.getCurrentDateTimeAsTimeStamp())
+        val lastMoodDate = SimpleDateFormat("dd", Locale.FRANCE).format(lastStoredMoodDate)
+
+        return currentDate.equals(lastMoodDate)
     }
 
     private fun setMoodDataInScreen(mood: Mood) {
