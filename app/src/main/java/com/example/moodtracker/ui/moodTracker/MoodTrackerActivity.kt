@@ -32,19 +32,32 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun setObservers() {
         viewModel.moods.observe(this, Observer { moods ->
-            val rcMoods = findViewById<RecyclerView>(R.id.rc_mood)
-            val adapter = MoodListAdapter(moods)
-
-            adapter.onMoodClick = { setMoodDataInScreen(it) }
-
-            rcMoods.layoutManager = LinearLayoutManager(
-                this,
-                LinearLayoutManager.HORIZONTAL,
-                false
-            )
-
-            rcMoods.adapter = adapter
+            loadMoodsAndSetLastOne(moods)
         })
+    }
+
+    private fun loadMoodsAndSetLastOne(moods: List<Mood>) {
+        if (moods.isEmpty()) return
+
+        val rcMoods = findViewById<RecyclerView>(R.id.rc_mood)
+        val adapter = MoodListAdapter(moods)
+
+        adapter.onMoodClick = {
+            setMoodDataInScreen(it)
+        }
+
+        rcMoods.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        rcMoods.adapter = adapter
+
+        // scroll to last mood and set its data
+        val lastPosition = moods.size - 1
+        rcMoods.scrollToPosition(lastPosition)
+        setMoodDataInScreen(moods[lastPosition])
     }
 
     private fun openMoodSelectorDialog() {
