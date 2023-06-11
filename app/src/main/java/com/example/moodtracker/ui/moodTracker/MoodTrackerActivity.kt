@@ -31,13 +31,16 @@ class MoodTrackerActivity : AppCompatActivity() {
         viewModel = MoodTrackerViewModel(MoodDatabaseRepository(this))
         moodSelectorDialog = MoodSelectorDialog()
 
+        openMoodSelectorDialog()
+        setObservers()
+    }
+
+    private fun openMoodSelectorDialog() {
         if (!hasTodayMoodBeenAdded()) {
-            openMoodSelectorDialog()
+            moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog")
         } else {
             getMoods()
         }
-
-        setObservers()
     }
 
     private fun setObservers() {
@@ -67,10 +70,6 @@ class MoodTrackerActivity : AppCompatActivity() {
         val lastPosition = moods.size - 1
         binding.rcMood.scrollToPosition(lastPosition)
         setMoodDataInScreen(moods[lastPosition])
-    }
-
-    private fun openMoodSelectorDialog() {
-        moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog")
     }
 
     private fun hasTodayMoodBeenAdded(): Boolean {
