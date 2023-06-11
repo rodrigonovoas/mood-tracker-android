@@ -12,7 +12,7 @@
     <color name="eerie_black">#1F1F1F</color>
     <color name="quartz">#4A4A4A</color>
 
-    <color name="happiness_status">#23F649</color>
-    <color name="neutral_status">#F8F51C</color>
-    <color name="sad_status">#F8371C</color>
+    <color name="happiness_status">#FFE000</color>
+    <color name="neutral_status">#CDCCC5</color>
+    <color name="sad_status">#F15151</color>
 </resources>

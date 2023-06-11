@@ -71,8 +71,10 @@ class MoodSelectorDialog: DialogFragment() {
 
         viewModel.closeDialog.observe(this, Observer { close ->
             if (close)
+            {
                 sharedPrefs.setLastMoodDate(DateUtils.getCurrentDateTimeAsTimeStamp())
                 loadMoodsAndDissmiss(false)
+            }
         })
     }
 
@@ -103,7 +105,7 @@ class MoodSelectorDialog: DialogFragment() {
         if (activity is MoodTrackerActivity)
         {
             (activity as MoodTrackerActivity).getMoods()
-            if (moodButtonVisible) (activity as MoodTrackerActivity).makeAddMoodButtonVisible()
+            (activity as MoodTrackerActivity).addMoodButtonVisibility(moodButtonVisible)
         }
 
         this.dismiss()

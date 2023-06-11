@@ -124,7 +124,11 @@ class MoodTrackerActivity : AppCompatActivity() {
         viewModel.getMoods()
     }
 
-    fun makeAddMoodButtonVisible() {
-        binding.btnAddMood.visibility = View.VISIBLE
+    fun addMoodButtonVisibility(visible: Boolean) {
+        if (visible) {
+            binding.btnAddMood.visibility = View.VISIBLE
+        } else {
+            binding.btnAddMood.visibility = View.GONE
+        }
     }
 }
