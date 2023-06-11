@@ -41,14 +41,16 @@
 
         <ImageView
             android:id="@+id/imv_happy_mood"
-            android:layout_width="64dp"
+            android:layout_width="62dp"
             android:layout_height="64dp"
+            android:padding="8dp"
             android:src="@drawable/ic_happy_mood" />
 
         <ImageView
             android:id="@+id/imv_neutral_mood"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:padding="8dp"
             android:layout_marginLeft="16dp"
             android:src="@drawable/ic_neutral_mood" />
 
@@ -56,6 +58,7 @@
             android:id="@+id/imv_sad_mood"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:padding="8dp"
             android:layout_marginLeft="16dp"
             android:src="@drawable/ic_sad_mood" />
     </LinearLayout>
@@ -67,6 +70,7 @@
         android:textSize="22dp"
         android:text=""
         android:textColor="@color/eerie_black"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/ll_mood_selector"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"

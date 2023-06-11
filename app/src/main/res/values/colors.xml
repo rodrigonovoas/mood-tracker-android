@@ -15,4 +15,5 @@
     <color name="happiness_status">#FFE000</color>
     <color name="neutral_status">#CDCCC5</color>
     <color name="sad_status">#F15151</color>
+    <color name="transparent">#00000000</color>
 </resources>
