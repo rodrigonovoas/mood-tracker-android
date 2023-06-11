@@ -1,6 +1,7 @@
 package com.example.moodtracker.ui.moodTracker
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,12 +34,18 @@ class MoodTrackerActivity : AppCompatActivity() {
 
         openMoodSelectorDialog()
         setObservers()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.btnAddMood.setOnClickListener { moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog") }
     }
 
     private fun openMoodSelectorDialog() {
         if (!hasTodayMoodBeenAdded()) {
             moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog")
         } else {
+            binding.btnAddMood.visibility = View.GONE
             getMoods()
         }
     }
@@ -115,5 +122,9 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     fun getMoods() {
         viewModel.getMoods()
+    }
+
+    fun makeAddMoodButtonVisible() {
+        binding.btnAddMood.visibility = View.VISIBLE
     }
 }

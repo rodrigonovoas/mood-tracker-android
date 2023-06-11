@@ -85,8 +85,8 @@
 
         <ImageView
             android:id="@+id/imv_comment"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/ic_comment"/>
 
         <TextView
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="Something to add?"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textColor="@color/eerie_black" />
     </LinearLayout>
 
@@ -105,10 +105,10 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:background="@drawable/bg_mood_selector_comment"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="16dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/ll_comment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -126,5 +126,6 @@
         app:cornerRadius="8dp"
         app:strokeColor="@color/eerie_black"
         app:strokeWidth="2dp"
+        android:textSize="20dp"
         android:text="CONTINUE" />
 </androidx.constraintlayout.widget.ConstraintLayout>
