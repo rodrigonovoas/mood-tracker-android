@@ -12,12 +12,16 @@ class MoodDatabaseRepository(context: Context): MoodRepository {
     }
 
 
-    override  suspend fun insertMood(book: Mood): Long {
-        return moodDao.insert(book)
+    override  suspend fun insertMood(mood: Mood): Long {
+        return moodDao.insert(mood)
+    }
+
+    override suspend fun updateMood(mood: Mood): Int {
+        return moodDao.update(mood)
     }
 
 
-    override  suspend fun deleteMood(book: Mood) {
-        moodDao.delete(book)
+    override  suspend fun deleteMood(mood: Mood) {
+        moodDao.delete(mood)
     }
 }

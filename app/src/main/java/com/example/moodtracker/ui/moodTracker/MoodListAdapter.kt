@@ -1,4 +1,4 @@
-package com.example.moodtracker.ui.moodSelector
+package com.example.moodtracker.ui.moodTracker
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
+import com.example.moodtracker.ui.moodSelector.MoodSelectorDialog
 import com.example.moodtracker.utils.DateUtils
 
 class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<MoodListAdapter.ViewHolder>()
@@ -16,13 +17,13 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
 
     var onMoodClick: ((Mood) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoodListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_mood_list, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MoodListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = moodList[position]
         val context = holder.ivMoodStatus.context
         holder.moodBar.setBackground(context.getDrawable(getMoodStatusBackground(item.moodType)))

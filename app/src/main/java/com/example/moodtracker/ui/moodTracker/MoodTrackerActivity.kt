@@ -10,7 +10,7 @@ import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.databinding.ActivityMoodTrackerBinding
 import com.example.moodtracker.db.MoodDatabaseRepository
 import com.example.moodtracker.sharedPreferences.SharedPreferenceHelper
-import com.example.moodtracker.ui.moodSelector.MoodListAdapter
+import com.example.moodtracker.ui.moodComment.MoodCommentDialog
 import com.example.moodtracker.ui.moodSelector.MoodSelectorDialog
 import com.example.moodtracker.utils.DateUtils
 import java.text.SimpleDateFormat
@@ -22,6 +22,7 @@ class MoodTrackerActivity : AppCompatActivity() {
     private lateinit var viewModel: MoodTrackerViewModel
     private lateinit var sharedPreferences: SharedPreferenceHelper
     private lateinit var moodSelectorDialog: MoodSelectorDialog
+    private lateinit var moodCommentDialog: MoodCommentDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,8 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.btnAddMood.setOnClickListener { moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog") }
+
+        binding.btnAddComment.setOnClickListener { moodCommentDialog.show(supportFragmentManager, "MoodCommentDialog") }
     }
 
     private fun openMoodSelectorDialog() {
@@ -58,10 +61,17 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun loadMoodsAndSetLastOne(moods: List<Mood>) {
         if (moods.isEmpty()) return
-
         val adapter = MoodListAdapter(moods)
 
         adapter.onMoodClick = {
+            moodCommentDialog = MoodCommentDialog(it)
+
+            if (it.comment != null && it.comment.isEmpty()) {
+                binding.btnAddComment.visibility = View.VISIBLE
+            } else {
+                binding.btnAddComment.visibility = View.GONE
+            }
+
             setMoodDataInScreen(it)
         }
 
@@ -76,6 +86,7 @@ class MoodTrackerActivity : AppCompatActivity() {
         // scroll to last mood and set its data
         val lastPosition = moods.size - 1
         binding.rcMood.scrollToPosition(lastPosition)
+        moodCommentDialog = MoodCommentDialog(moods[lastPosition])
         setMoodDataInScreen(moods[lastPosition])
     }
 

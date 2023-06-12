@@ -34,6 +34,20 @@
             android:textAlignment="center"
             android:textSize="36dp" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_add_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_add_mood"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/eerie_black"
+            android:visibility="gone"
+            android:text="Add comment" />
+
         <TextView
             android:id="@+id/tv_mood_date"
             android:layout_width="wrap_content"

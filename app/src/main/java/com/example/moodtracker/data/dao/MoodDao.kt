@@ -1,9 +1,6 @@
 package com.example.moodtracker.data.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.moodtracker.data.entity.Mood
 
 @Dao
@@ -13,6 +10,9 @@ interface MoodDao {
 
     @Insert
     suspend fun insert(mood: Mood): Long
+
+    @Update
+    suspend fun update(mood: Mood): Int
 
     @Delete
     suspend fun delete(mood: Mood): Int
