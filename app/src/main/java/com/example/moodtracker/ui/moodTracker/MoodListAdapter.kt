@@ -11,6 +11,7 @@ import com.example.moodtracker.R
 import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.ui.moodSelector.MoodSelectorDialog
 import com.example.moodtracker.utils.DateUtils
+import java.util.concurrent.TimeUnit
 
 class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<MoodListAdapter.ViewHolder>()
 {
@@ -27,10 +28,22 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
         val item = moodList[position]
         val context = holder.ivMoodStatus.context
         holder.moodBar.setBackground(context.getDrawable(getMoodStatusBackground(item.moodType)))
+        holder.imvThreeDots.visibility = View.GONE
         holder.ivMoodStatus.setImageDrawable(context.getDrawable(getMoodStatusImage(item.moodType)))
         holder.tvDate.setText(DateUtils.convertLongToShortDate(item.creationDate))
         holder.llMood.setOnClickListener { onMoodClick?.invoke(item) }
         setMoodBarSize(holder, item)
+        if (position > 0) {
+            if (hasPreviousAndCurrentMoodThreeDaysDiff(moodList[position], moodList[position - 1])) {
+                holder.imvThreeDots.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun hasPreviousAndCurrentMoodThreeDaysDiff(current: Mood, previous: Mood): Boolean  {
+        val millionSeconds = current.creationDate - previous.creationDate
+        val diff = TimeUnit.MILLISECONDS.toDays(millionSeconds)
+        return diff > 3
     }
 
     private fun setMoodBarSize(
@@ -47,6 +60,7 @@ class MoodListAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<M
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val llMood: LinearLayout = itemView.findViewById(R.id.ll_mood)
+        val imvThreeDots: ImageView = itemView.findViewById(R.id.imv_three_dots)
         val moodBar: View = itemView.findViewById(R.id.view_mood_bar)
         val ivMoodStatus: ImageView = itemView.findViewById(R.id.imv_mood_status)
         val tvDate: TextView = itemView.findViewById(R.id.tv_mood_date)
