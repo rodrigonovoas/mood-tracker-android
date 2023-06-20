@@ -40,7 +40,6 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.btnAddMood.setOnClickListener { moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog") }
-
         binding.btnAddComment.setOnClickListener { moodCommentDialog.show(supportFragmentManager, "MoodCommentDialog") }
     }
 
@@ -57,29 +56,35 @@ class MoodTrackerActivity : AppCompatActivity() {
         viewModel.moods.observe(this, Observer { moods ->
             loadMoodsAndSetLastOne(moods)
         })
+
+        viewModel.selectedMood.observe(this, Observer { mood ->
+            moodCommentDialog = MoodCommentDialog(mood)
+
+            val addButtonVisible = (mood.comment != null && mood.comment.isEmpty())
+            viewModel.setAddMoodVisibility(addButtonVisible)
+
+            setMoodDataInScreen(mood)
+        })
+
+        viewModel.btnAddMoodVisibility.observe(this, Observer { visible ->
+            if(visible) {
+                binding.btnAddComment.visibility = View.VISIBLE
+            } else {
+                binding.btnAddComment.visibility = View.GONE
+            }
+        })
     }
 
     private fun loadMoodsAndSetLastOne(moods: List<Mood>) {
         if (moods.isEmpty()) return
         val adapter = MoodListAdapter(moods)
 
-        adapter.onMoodClick = {
-            moodCommentDialog = MoodCommentDialog(it)
-
-            if (it.comment != null && it.comment.isEmpty()) {
-                binding.btnAddComment.visibility = View.VISIBLE
-            } else {
-                binding.btnAddComment.visibility = View.GONE
-            }
-
-            setMoodDataInScreen(it)
-        }
+        adapter.onMoodClick = { viewModel.setSelectedMood(it) }
 
         binding.rcMood.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.HORIZONTAL,
-            false
-        )
+            false)
 
         binding.rcMood.adapter = adapter
 
@@ -117,7 +122,7 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun setNeutralMoodScreen(mood: Mood) {
         binding.tvMoodComment.text = ""
-        if (mood.comment != null && mood.comment.isNotEmpty()) binding.tvMoodComment.setText("\"" + mood.comment + "\"")
+        if (mood.comment != null && mood.comment.isNotEmpty()) binding.tvMoodComment.setText("\" " + mood.comment + " \"")
         binding.tvMoodDate.setText(DateUtils.convertLongToLongDate(mood.creationDate))
         binding.imvMoodStatus.setImageDrawable(getDrawable(R.drawable.ic_neutral_mood))
         binding.mainView.setBackgroundColor(getColor(R.color.neutral_status))
@@ -125,7 +130,7 @@ class MoodTrackerActivity : AppCompatActivity() {
 
     private fun setSadMoodScreen(mood: Mood) {
         binding.tvMoodComment.text = ""
-        if (mood.comment != null && mood.comment.isNotEmpty()) binding.tvMoodComment.setText("\"" + mood.comment + "\"")
+        if (mood.comment != null && mood.comment.isNotEmpty()) binding.tvMoodComment.setText("\" " + mood.comment + " \"")
         binding.tvMoodDate.setText(DateUtils.convertLongToLongDate(mood.creationDate))
         binding.imvMoodStatus.setImageDrawable(getDrawable(R.drawable.ic_sad_mood))
         binding.mainView.setBackgroundColor(getColor(R.color.sad_status))
