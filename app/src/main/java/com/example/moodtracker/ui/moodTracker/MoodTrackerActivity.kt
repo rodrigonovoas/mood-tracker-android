@@ -99,7 +99,7 @@ class MoodTrackerActivity : AppCompatActivity() {
         val lastPosition = moods.size - 1
         binding.rcMood.scrollToPosition(lastPosition)
         moodCommentDialog = MoodCommentDialog(moods[lastPosition])
-        setMoodDataInScreen(moods[lastPosition])
+        viewModel.setSelectedMood(moods[lastPosition])
     }
 
     private fun hasTodayMoodBeenAdded(): Boolean {
