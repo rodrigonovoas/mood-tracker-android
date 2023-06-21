@@ -2,6 +2,7 @@ package com.example.moodtracker.ui.moodTracker
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,8 +14,11 @@ import com.example.moodtracker.sharedPreferences.SharedPreferenceHelper
 import com.example.moodtracker.ui.moodComment.MoodCommentDialog
 import com.example.moodtracker.ui.moodSelector.MoodSelectorDialog
 import com.example.moodtracker.utils.DateUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class MoodTrackerActivity : AppCompatActivity() {
 
@@ -41,6 +45,7 @@ class MoodTrackerActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.btnAddMood.setOnClickListener { moodSelectorDialog.show(supportFragmentManager, "MoodSelectorDialog") }
         binding.btnAddComment.setOnClickListener { moodCommentDialog.show(supportFragmentManager, "MoodCommentDialog") }
+        binding.imvInfo.setOnClickListener { showBottomSheetDialog() }
     }
 
     private fun openMoodSelectorDialog() {
@@ -79,7 +84,9 @@ class MoodTrackerActivity : AppCompatActivity() {
         if (moods.isEmpty()) return
         val adapter = MoodListAdapter(moods)
 
-        adapter.onMoodClick = { viewModel.setSelectedMood(it) }
+        adapter.onMoodClick = {
+            viewModel.setSelectedMood(it)
+        }
 
         binding.rcMood.layoutManager = LinearLayoutManager(
             this,
@@ -146,5 +153,23 @@ class MoodTrackerActivity : AppCompatActivity() {
         } else {
             binding.btnAddMood.visibility = View.GONE
         }
+    }
+
+    private fun showBottomSheetDialog() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(R.layout.dialog_info)
+
+        val tvHappyMoods = bottomSheetDialog.findViewById<TextView>(R.id.tv_happy_moods)
+        val tvNeutralMoods = bottomSheetDialog.findViewById<TextView>(R.id.tv_neutral_moods)
+        val tvSadMoods = bottomSheetDialog.findViewById<TextView>(R.id.tv_sad_moods)
+        val btnClose = bottomSheetDialog.findViewById<MaterialButton>(R.id.btn_close)
+
+        tvHappyMoods?.setText(tvHappyMoods?.text.toString() + " »  " + viewModel.getHappyMoodQuantity())
+        tvNeutralMoods?.setText(tvNeutralMoods?.text.toString() + " »  " + viewModel.getNeutralMoodQuantity())
+        tvSadMoods?.setText(tvSadMoods?.text.toString() + " »  " + viewModel.getSadMoodQuantity())
+
+        btnClose?.setOnClickListener { bottomSheetDialog.dismiss() }
+
+        bottomSheetDialog.show()
     }
 }

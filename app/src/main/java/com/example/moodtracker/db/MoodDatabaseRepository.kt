@@ -11,7 +11,17 @@ class MoodDatabaseRepository(context: Context): MoodRepository {
         return moodDao.getAll()
     }
 
+    override suspend fun getHappyMoodQuantity(): Int {
+        return moodDao.getHappyMoodQuantity()
+    }
 
+    override suspend fun getNeutralMoodQuantity(): Int {
+        return moodDao.getNeutralMoodQuantity()
+    }
+
+    override suspend fun getSadMoodQuantity(): Int {
+        return moodDao.getSadMoodQuantity()
+    }
     override  suspend fun insertMood(mood: Mood): Long {
         return moodDao.insert(mood)
     }

@@ -8,6 +8,15 @@ interface MoodDao {
     @Query("SELECT * FROM Mood")
     suspend fun getAll(): List<Mood>
 
+    @Query("SELECT count(id) FROM Mood where moodType = 0")
+    suspend fun getHappyMoodQuantity(): Int
+
+    @Query("SELECT count(id) FROM Mood where moodType = 1")
+    suspend fun getNeutralMoodQuantity(): Int
+
+    @Query("SELECT count(id) FROM Mood where moodType = 2")
+    suspend fun getSadMoodQuantity(): Int
+
     @Insert
     suspend fun insert(mood: Mood): Long
 

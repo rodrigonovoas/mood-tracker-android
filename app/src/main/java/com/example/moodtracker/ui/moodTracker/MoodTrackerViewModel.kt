@@ -18,7 +18,12 @@ class MoodTrackerViewModel(val repository: MoodDatabaseRepository): ViewModel() 
     private val _btnAddMoodVisibility = MutableLiveData<Boolean>()
     val btnAddMoodVisibility: LiveData<Boolean> get() = _btnAddMoodVisibility
 
+    private var totalHappyMood: Int = 0
+    private var totalNeutralMood: Int = 0
+    private var totalSadMood: Int = 0
+
     fun getMoods() {
+        getTotalMood()
         viewModelScope.launch {
             _moods.value = repository.getAllMood()
         }
@@ -30,5 +35,25 @@ class MoodTrackerViewModel(val repository: MoodDatabaseRepository): ViewModel() 
 
     fun setAddMoodVisibility(visible: Boolean) {
         _btnAddMoodVisibility.value = visible
+    }
+
+    private fun getTotalMood() {
+        viewModelScope.launch {
+            totalHappyMood = repository.getHappyMoodQuantity()
+            totalNeutralMood = repository.getNeutralMoodQuantity()
+            totalSadMood = repository.getSadMoodQuantity()
+        }
+    }
+
+    fun getHappyMoodQuantity(): String {
+        return totalHappyMood.toString()
+    }
+
+    fun getNeutralMoodQuantity(): String {
+        return totalNeutralMood.toString()
+    }
+
+    fun getSadMoodQuantity(): String {
+        return totalSadMood.toString()
     }
 }
