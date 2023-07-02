@@ -24,7 +24,7 @@ class FakeMoodDatabaseRepository: MoodRepository {
     }
 
     override suspend fun updateMood(mood: Mood): Int {
-       return 0
+       return 1
     }
 
     override suspend fun deleteMood(book: Mood) { }

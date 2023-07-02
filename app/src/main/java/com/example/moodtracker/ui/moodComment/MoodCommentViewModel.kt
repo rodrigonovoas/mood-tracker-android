@@ -6,9 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moodtracker.data.entity.Mood
 import com.example.moodtracker.db.MoodDatabaseRepository
+import com.example.moodtracker.db.MoodRepository
 import kotlinx.coroutines.launch
 
-class MoodCommentViewModel(val repository: MoodDatabaseRepository): ViewModel() {
+class MoodCommentViewModel(val repository: MoodRepository): ViewModel() {
 
     val moodUpdated: LiveData<Boolean> get() = _moodUpdated
     private var _moodUpdated = MutableLiveData<Boolean>()
